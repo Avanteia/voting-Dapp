@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import ElectionABI from './ElectionABI';
+import './App.css';
 
 const CONTRACT_ADDRESS = '0x512eAa98d0C438bbD6fa9288f7F8C95DBf55124D';
 
@@ -22,7 +23,7 @@ function App() {
                     candidatesArray.push({
                         id: candidate.id.toNumber(),
                         name: candidate.name,
-                        voteCount: candidate.voteCount.toString() // Convert BigNumber to string
+                        voteCount: candidate.voteCount.toString()
                     });
                 }
                 setCandidates(candidatesArray);
@@ -45,17 +46,27 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Blockchain Voting System</h1>
-            <h2>Candidates</h2>
-            <ul>
-                {candidates.map((candidate, index) => (
-                    <li key={index}>
-                        {candidate.name} - Votes: {candidate.voteCount}
-                        <button onClick={() => setSelectedCandidate(candidate)}>Vote</button>
-                    </li>
-                ))}
-            </ul>
-            <button onClick={vote}>Cast Vote</button>
+            <header className="app-header">
+                <h1>Blockchain Voting System</h1>
+            </header>
+            <main className="app-content">
+                <h2>Candidates</h2>
+                <div className="candidates-list">
+                    {candidates.map((candidate, index) => (
+                        <div key={index} className="candidate-card">
+                            <span className="candidate-name">{candidate.name}</span>
+                            <span className="candidate-votes">Votes: {candidate.voteCount}</span>
+                            <button 
+                                className="vote-button" 
+                                onClick={() => setSelectedCandidate(candidate)}
+                            >
+                                Vote
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <button className="cast-vote-button" onClick={vote}>Cast Vote</button>
+            </main>
         </div>
     );
 }
